@@ -22,12 +22,15 @@
 
 ![image](https://github.com/arinauntilova/Virtualization_lab3_Untilova/assets/43550219/ec6722dd-cc70-4e11-82fc-6f702b8cf2be)
 
+Разворчаиваем приложением с именем kubia:
 
 `kubectl create deployment kubia --image=ariannauntilova/kubia`
 
 ![image](https://github.com/arinauntilova/Virtualization_lab3_Untilova/assets/43550219/2ff7ae51-28d0-419a-8e90-79b0adf667e0)
 
 Развернем приложение с индексом репликации = 3 на кластере Kubernetes. Тип службы – LoadBalancer:
+
+Создав службу типа LoadBalancer, создаем внешний балансировщик нагрузки, и доступ к модулям будет осуществляться через общедоступный IP-адрес балансировщика нагрузки:
 
 `kubectl expose deployment kubia --type=LoadBalancer --port=8080`
 
@@ -54,6 +57,10 @@
 
 Обратитесь несколько раз к приложению с помощью утилиты curl:
 
+Запросы, отправленные в службу, будут отправлены во все три модуля
+
+Служба выбирает один из трех адресов подов в качестве пункта назначения
+
 `curl -s 10.103.217.134:8080`
 
 ![image](https://github.com/arinauntilova/Virtualization_lab3_Untilova/assets/43550219/d4c87211-043c-44b3-834b-e6282b0fec74)
@@ -64,7 +71,11 @@
 
 Использую образ ariannauntilova/attm2 из Docker Hub (лр_1):
 
+Разворчаиваем приложением с именем kubiapart2:
+
 `kubectl create deployment kubiapart2 --image=ariannauntilova/attm2:latest`
+
+Создаем службу типа LoadBalancer:
 
 `kubectl expose deployment/kubiapart2 --type="LoadBalancer" --port=80`
 
